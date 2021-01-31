@@ -1,0 +1,25 @@
+\section*{Question 1}
+
+Considering the given code form WhileLanguage.g for \texttt{antlr3.5}, we can construct a context free grammar for the calculator. If we extract the grammar from the code, we get the productions as seen in table \ref{tab:origProd}. The first production is in order to read the whole file before parsing.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|rl|}
+    \hline
+    P $\;\rightarrow$ & S \\
+    S  $\;\rightarrow$ & BS $|$ BS ';' S \\
+    BS  $\;\rightarrow$ & ID ':=' AE $|$ 'if' BE 'then' BS 'else' BS $|$ '\{' S '\}' \\
+    BE $\;\rightarrow$ & L $|$ L '\&\&' BE \\
+    L $\;\rightarrow$ & BBE $|$ '!' L \\
+    BBE $\;\rightarrow$ & 'true' $|$ 'false' $|$ AE '=' AE\\
+    AE $\;\rightarrow$ & MAE $|$ MAE '+' AE $|$ MAE '-' AE \\
+    MAE $\;\rightarrow$ & BAE $|$ BAE '*' MAE \\
+    BAE $\;\rightarrow$ & NUM $|$ ID \\
+
+    \hline
+    \end{tabular}
+    \caption{The original productions extracted from the code in WhileLanguage.g, not using regular expressions. The variable names are acronyms for the names in the file: P: program, S: statement, BS: base\_statement, BE: bool\_expr, L: literal, BBE: base\_bool\_expr, AE: arith\_expr, MAE: mult\_arith\_expr, BAE: base\_arith\_expr. NUM is any integer and ID is a variable name. }
+    \label{tab:origProd}
+\end{table}
+
+The given context free grammar is written as CFL would be represented in class\footnote{Some variables are several characters, fx BS. This is kept in order to give a clear link between the variable names, and their corresponding rules in the while language.} using productions. All symbols enclosed in a pair of single quotation marks are read as a symbol by the parser and is a part of the grammar. The WhileLanguage.g also uses a production called \texttt{WS} which purpose is to ignore white space when parsing.
